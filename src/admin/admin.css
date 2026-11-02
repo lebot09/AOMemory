@@ -48,3 +48,7 @@
 .admin-thumbs li { display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--fs-small); text-align: center; }
 .admin-thumbs img { width: 100%; aspect-ratio: 1; object-fit: contain; background: var(--ao-light-gray); border-radius: 8px; }
 .admin-danger { border-color: #f3b4bb; }
+.admin-scores { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
+.admin-scores__board { align-items: stretch; }
+.admin-scores__board .btn { align-self: flex-start; margin-top: var(--space-2); }
+.admin-nav { display: flex; gap: var(--space-4); margin-right: auto; }

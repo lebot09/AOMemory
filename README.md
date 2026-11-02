@@ -79,6 +79,14 @@ Every push to `main` also publishes a test copy to **https://lebot09.github.io/A
 
 In Supabase, go to **Authentication › URL Configuration** and set **Site URL** to your live address (e.g. `https://memory.example.org`), so admin confirmation emails link back to the site.
 
+## Today's best (single player)
+
+- Every single-player game (on **Play** or in booth mode) adds its time to **Today's best**. There is one board per number of cards (12, 20 or 30), ranked by time, then moves.
+- The boards are shared by every screen through the `daily_scores` table and start fresh each day (the player's local date). Only the display name the player typed is stored, and times older than 3 days are deleted automatically.
+- Scores go in only through `submit_daily_score`, which checks the date and that the time and moves are possible. Nobody can edit or delete them from the browser.
+- Admins can wipe one board or all of them to zero under **Admin › Today's best** (`/admin/scores`), using `reset_daily_scores`.
+- Offline, a screen keeps its own board in the browser until the connection is back.
+
 ## Multiplayer
 
 Multiplayer is played together on one screen (a booth display, TV or tablet), not online.
@@ -87,7 +95,7 @@ Multiplayer is played together on one screen (a booth display, TV or tablet), no
 - Players take turns flipping two cards. Finding a pair earns that player another turn; a miss passes the turn on.
 - The scoreboard and a large "Your turn, *Name*" banner show whose turn it is, readable from a few metres away. Screen readers hear who plays next after each move.
 - At the end, players are ranked by pairs found. **Play again** starts a rematch with the same names.
-- Names stay on the device and are never sent anywhere. Today's best times only count solo games.
+- Multiplayer names stay on the device and are never sent anywhere. Multiplayer games have no scoreboard.
 
 ## Branding
 
@@ -104,7 +112,6 @@ Open `/booth` on the booth screen (or tap **Booth mode** on the home page), then
 - Players can enter a display name (optional) and play. Results show their rank for the day.
 - If nobody touches the screen for 45 seconds (configurable), "Still playing?" appears. After 10 more seconds it resets to the attract screen.
 - **Staff menu:** tap the top-left corner 5 times quickly, or press Ctrl+Shift+S. From there you can choose the card set and difficulty, set the idle time, turn name entry on or off, clear today's times, toggle full screen and change display settings.
-- Today's best times are stored only in that screen's browser, and older days are deleted automatically.
 - After one online visit, the game works offline. The built-in "Shapes (demo)" set is always available.
 
 ## Accessibility

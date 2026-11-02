@@ -1,0 +1,22 @@
+.daily-board { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.3em; }
+.daily-board li {
+  display: grid; grid-template-columns: 2em 1fr auto auto; gap: 0.8em; align-items: baseline;
+  padding: 0.25em 0.6em; border-radius: 6px;
+}
+.daily-board li:nth-child(odd) { background: color-mix(in srgb, var(--color-surface) 70%, transparent); }
+.daily-board li[data-me] { background: var(--ao-yellow); color: var(--ao-blue); font-weight: 700; }
+.daily-board__pos { font-weight: 700; }
+.daily-board__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.daily-board__time { font-variant-numeric: tabular-nums; font-weight: 600; }
+.daily-board__moves { opacity: 0.8; font-size: 0.85em; }
+.daily-board__empty, .daily-board__note { opacity: 0.85; margin: 0.4em 0; }
+.daily-board__note { font-size: var(--fs-small); }
+
+.daily-rank {
+  text-align: center; font-weight: 700; color: var(--ao-blue); background: var(--ao-yellow);
+  border-radius: var(--radius-pill); padding: 0.3em 1em;
+}
+.daily-results { margin-top: var(--space-4); text-align: left; display: flex; flex-direction: column; gap: var(--space-3); }
+
+.daily-panel { margin-top: var(--space-8); max-width: 720px; }
+.daily-panel h2 { margin-bottom: var(--space-3); }

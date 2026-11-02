@@ -2,12 +2,13 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { AoLogo } from '../components/Brand'
 import { recordGame } from '../lib/cardSets'
 import { DEMO_SET_ID } from '../game/demoSet'
-import { DIFFICULTY_PAIRS, formatTime } from '../game/engine'
+import { DIFFICULTY_PAIRS } from '../game/engine'
 import { MAX_PLAYERS } from '../game/SetupForm'
 import { Game, type GameResult } from '../game/Game'
 import { useLoadedFaces } from '../game/useLoadedFaces'
 import { loadBoothConfig, type BoothConfig } from './config'
-import { addScore, loadScores, saveScores, type Score } from './leaderboard'
+import { DailyBoard, rankText } from '../scores/DailyBoard'
+import { useDailyBoard } from '../scores/useDailyBoard'
 import { StaffMenu } from './StaffMenu'
 import './booth.css'
 
@@ -18,22 +19,6 @@ const CONFIRM_SECONDS = 10
 /** Taps on the hidden corner, within 3 s, that open the staff menu. */
 const STAFF_TAPS = 5
 
-function Leaderboard({ scores, highlight }: { scores: Score[]; highlight?: Score }) {
-  if (scores.length === 0) return <p className="booth-board__empty">No times yet today. Be the first!</p>
-  return (
-    <ol className="booth-board">
-      {scores.map((s, i) => (
-        <li key={`${s.at}-${i}`} data-me={s === highlight || undefined}>
-          <span className="booth-board__pos">{i + 1}</span>
-          <span className="booth-board__name">{s.name}</span>
-          <span className="booth-board__time">{formatTime(s.ms)}</span>
-          <span className="booth-board__moves">{s.moves} moves</span>
-        </li>
-      ))}
-    </ol>
-  )
-}
-
 export function Booth() {
   const [config, setConfig] = useState<BoothConfig>(loadBoothConfig)
   const pairs = DIFFICULTY_PAIRS[config.difficulty]
@@ -41,17 +26,16 @@ export function Booth() {
   const [phase, setPhase] = useState<Phase>('attract')
   const [names, setNames] = useState<string[]>([''])
   const [seed, setSeed] = useState(() => Date.now())
-  const [scores, setScores] = useState<Score[]>(() => loadScores(pairs))
-  const [lastScore, setLastScore] = useState<Score | undefined>()
+  // Shared "Today's best" for this board size; refreshed so the attract screen shows other screens' times.
+  const daily = useDailyBoard(pairs, 30)
+  const [submitted, setSubmitted] = useState(false)
   const [staffOpen, setStaffOpen] = useState(false)
   const [confirmLeft, setConfirmLeft] = useState<number | null>(null)
   const lastActivity = useRef(Date.now())
   const taps = useRef<number[]>([])
 
-  useEffect(() => { setScores(loadScores(pairs)) }, [pairs])
-
   const reset = useCallback(() => {
-    setPhase('attract'); setNames(['']); setConfirmLeft(null); setLastScore(undefined)
+    setPhase('attract'); setNames(['']); setConfirmLeft(null); setSubmitted(false)
   }, [])
 
   const activity = useCallback(() => {
@@ -90,19 +74,15 @@ export function Booth() {
     activity()
     setNames(entered.length > 1 ? entered.map((n, i) => n.trim() || `Player ${i + 1}`) : [entered[0]?.trim() || 'Guest'])
     setSeed(Date.now())
-    setLastScore(undefined)
+    setSubmitted(false)
     setPhase('playing')
     if (config.versionId !== DEMO_SET_ID) void recordGame(config.versionId, 'booth', pairs)
   }
 
   const onFinish = (r: GameResult) => {
     if (r.players.length > 1) return // today's best times are for solo games
-    const score: Score = { name: r.name, ms: r.ms, moves: r.moves, pairs, at: Date.now() }
-    const { scores: next } = addScore(scores, score)
-    setScores(next); saveScores(pairs, next); setLastScore(score)
+    void daily.submit({ name: r.name, ms: r.ms, moves: r.moves }).then(() => setSubmitted(true))
   }
-
-  const position = lastScore ? scores.indexOf(lastScore) + 1 : 0
 
   return (
     <div className="booth" onPointerDown={activity} onKeyDown={activity}>
@@ -123,7 +103,7 @@ export function Booth() {
       {phase === 'attract' && (
         <aside className="booth-attract__scores" aria-label="Today's best times">
           <h2>Today's best</h2>
-          <Leaderboard scores={scores.slice(0, 5)} />
+          <DailyBoard board={daily.board} limit={5} />
         </aside>
       )}
 
@@ -166,9 +146,9 @@ export function Booth() {
             onFinish={onFinish}
             onActivity={activity}
             resultsExtra={() => (
-              <div className="booth-results">
-                {position > 0 && <p className="booth-results__rank">You're number {position} today!</p>}
-                <Leaderboard scores={scores.slice(0, 5)} highlight={lastScore} />
+              <div className="daily-results">
+                {submitted && <p className="daily-rank">{rankText(daily.board, daily.mine)}</p>}
+                <DailyBoard board={daily.board} highlight={daily.mine} limit={5} />
               </div>
             )}
           />
@@ -196,7 +176,6 @@ export function Booth() {
           config={config}
           onClose={() => setStaffOpen(false)}
           onSave={(c) => { setConfig(c); setStaffOpen(false); reset() }}
-          onScoresCleared={() => setScores([])}
         />
       )}
     </div>
