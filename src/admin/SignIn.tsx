@@ -30,7 +30,7 @@ export function SignIn() {
       <label className="setup__label" htmlFor="email">Email</label>
       <input id="email" className="setup__input" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
       <label className="setup__label" htmlFor="password">Password</label>
-      <input id="password" className="setup__input" type="password" required minLength={8}
+      <input id="password" className="setup__input" type="password" required minLength={mode === 'sign-up' ? 8 : undefined}
         autoComplete={mode === 'sign-in' ? 'current-password' : 'new-password'} value={password} onChange={(e) => setPassword(e.target.value)} />
       {message && <p role={message.kind === 'error' ? 'alert' : 'status'} className={`admin-msg admin-msg--${message.kind}`}>{message.text}</p>}
       <div className="admin-row">
