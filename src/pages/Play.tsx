@@ -14,7 +14,7 @@ export function Play() {
   const start = (s: Setup) => {
     setSeed(Date.now())
     setSetup(s)
-    if (s.versionId !== DEMO_SET_ID) void recordGame(s.versionId, 'solo', DIFFICULTY_PAIRS[s.difficulty])
+    if (s.versionId !== DEMO_SET_ID) void recordGame(s.versionId, s.playerNames.length > 1 ? 'local' : 'solo', DIFFICULTY_PAIRS[s.difficulty])
   }
 
   if (!setup) {
@@ -44,7 +44,7 @@ export function Play() {
       key={seed}
       faces={loaded.faces}
       pairs={DIFFICULTY_PAIRS[setup.difficulty]}
-      playerName={setup.playerName}
+      playerNames={setup.playerNames}
       setName={setup.setName}
       seed={seed}
       onExit={() => setSetup(null)}

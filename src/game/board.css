@@ -31,10 +31,11 @@
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 
-/* Card back: AO dark blue with a yellow corner accent. */
+/* Card back: AO dark blue, white AO logo in the middle, yellow corner accent. */
 .tile__back {
   background:
     linear-gradient(135deg, var(--ao-yellow) 0 14%, transparent 14%),
+    url('/brand/ao-logo-white.svg') center / 56% auto no-repeat,
     var(--color-card-back);
   box-shadow: inset 0 0 0 2px color-mix(in srgb, white 18%, transparent);
 }
@@ -78,3 +79,5 @@
 
 :root[data-contrast='high'] .tile__back { box-shadow: inset 0 0 0 3px var(--ao-white); }
 :root[data-contrast='high'] .tile__front { box-shadow: inset 0 0 0 3px #000; }
+/* Dark theme: a light edge keeps the card backs distinct from the page. */
+:root[data-theme='dark'] .tile__back { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--ao-light-blue) 35%, transparent); }

@@ -1,5 +1,5 @@
 import { useSettings } from './SettingsContext'
-import type { Contrast, Motion, TextSize } from './settings'
+import type { Contrast, Motion, TextSize, Theme } from './settings'
 import './settings.css'
 
 function Choice<T extends string>(props: {
@@ -24,6 +24,9 @@ export function SettingsPanel() {
   return (
     <section aria-labelledby="settings-title" className="settings">
       <h2 id="settings-title">Display settings</h2>
+      <Choice<Theme> legend="Theme" name="theme" value={settings.theme}
+        options={[{ value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }, { value: 'system', label: 'Follow device' }]}
+        onChange={(theme) => update({ theme })} />
       <Choice<Contrast> legend="Contrast" name="contrast" value={settings.contrast}
         options={[{ value: 'standard', label: 'Standard' }, { value: 'high', label: 'High contrast' }]}
         onChange={(contrast) => update({ contrast })} />

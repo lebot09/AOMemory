@@ -27,7 +27,7 @@ h4 { font-size: var(--fs-h4); }
 small { font-size: var(--fs-small); }
 
 a { color: var(--color-action); font-weight: var(--weight-semibold); }
-:root[data-contrast='high'] main a:not(.btn) { color: var(--ao-blue); text-decoration-thickness: 2px; }
+:root[data-contrast='high'] main a:not(.btn) { color: var(--color-heading); text-decoration-thickness: 2px; }
 
 :focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
 
@@ -45,7 +45,7 @@ a { color: var(--color-action); font-weight: var(--weight-semibold); }
 }
 .btn:hover { background: var(--color-action-hover); border-color: var(--color-action-hover); }
 .btn--secondary { background: transparent; color: var(--color-action); border-width: 1px; }
-.btn--secondary:hover { background: color-mix(in srgb, var(--ao-light-blue) 40%, transparent); color: var(--color-action); }
+.btn--secondary:hover { background: color-mix(in srgb, var(--color-surface-interactive) 40%, transparent); color: var(--color-action); }
 .btn--small { min-height: max(var(--btn-small), 44px); padding: 0 var(--space-4); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
@@ -65,9 +65,9 @@ a { color: var(--color-action); font-weight: var(--weight-semibold); }
 .choice__option input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
 .choice__option span {
   display: inline-flex; align-items: center; min-height: var(--touch-min); padding: 0 var(--space-6);
-  border: 1px solid var(--ao-blue); border-radius: var(--radius-pill);
-  color: var(--ao-blue); font-weight: var(--weight-semibold); background: var(--color-bg);
+  border: 1px solid var(--color-outline); border-radius: var(--radius-pill);
+  color: var(--color-heading); font-weight: var(--weight-semibold); background: var(--color-bg);
 }
 /* AO blue, not active blue: these labels are normal-size text and need 4.5:1. */
-.choice__option input:checked + span { background: var(--ao-blue); color: var(--ao-white); }
+.choice__option input:checked + span { background: var(--color-selected); color: var(--color-on-selected); border-color: var(--color-selected); }
 .choice__option input:focus-visible + span { outline: 3px solid var(--color-focus); outline-offset: 3px; }

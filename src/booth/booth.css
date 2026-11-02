@@ -92,3 +92,10 @@
 .staff__check { display: inline-flex; gap: var(--space-2); align-items: center; min-height: var(--touch-min); }
 .staff__check input { width: 24px; height: 24px; }
 .staff__display summary { cursor: pointer; font-weight: var(--weight-semibold); color: var(--color-heading); min-height: var(--touch-min); display: flex; align-items: center; }
+.booth-players { display: flex; gap: 0; border: 2px solid var(--ao-white); border-radius: var(--radius-pill); overflow: hidden; }
+.booth-players__opt {
+  font: inherit; font-weight: 700; font-size: max(18px, 2.4vh); min-height: max(var(--btn-large), 6vh); padding: 0 1.4em;
+  background: transparent; color: var(--ao-white); border: 0; cursor: pointer;
+}
+.booth-players__opt[aria-checked='true'] { background: var(--ao-yellow); color: var(--ao-blue); }
+.booth .scoreboard__player { font-size: max(16px, 2.2vh); }
