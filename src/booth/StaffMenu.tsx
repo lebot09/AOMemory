@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SetupForm } from '../game/SetupForm'
 import { SettingsPanel } from '../settings/SettingsPanel'
-import { saveBoothConfig, type BoothConfig } from './config'
+import { saveBoothConfig, type BoothConfig, type BoothSize } from './config'
 
 type Props = {
   config: BoothConfig
@@ -14,6 +14,7 @@ export function StaffMenu({ config, onClose, onSave }: Props) {
   const [idleSeconds, setIdleSeconds] = useState(config.idleSeconds)
   const [askName, setAskName] = useState(config.askName)
   const [touchKeyboard, setTouchKeyboard] = useState(config.touchKeyboard)
+  const [size, setSize] = useState<BoothSize>(config.size)
 
   const fullscreen = () => {
     const el = document.documentElement
@@ -36,6 +37,15 @@ export function StaffMenu({ config, onClose, onSave }: Props) {
         <p>To reset today's best times, sign in to <Link to="/admin/scores">Admin › Today's best</Link>.</p>
 
         <div className="staff__row">
+          <label className="setup__label" htmlFor="booth-size">Screen size</label>
+          <select id="booth-size" className="setup__input" value={size} onChange={(e) => setSize(e.target.value as BoothSize)}>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large (big screens far away)</option>
+          </select>
+        </div>
+
+        <div className="staff__row">
           <label className="setup__label" htmlFor="idle">Reset after no touch for</label>
           <select id="idle" className="setup__input" value={idleSeconds} onChange={(e) => setIdleSeconds(Number(e.target.value))}>
             {[30, 45, 60, 90, 120].map((s) => <option key={s} value={s}>{s} seconds</option>)}
@@ -55,7 +65,7 @@ export function StaffMenu({ config, onClose, onSave }: Props) {
           submitLabel="Save and restart"
           initial={{ versionId: config.versionId, difficulty: config.difficulty }}
           onStart={(s) => {
-            const next: BoothConfig = { ...config, versionId: s.versionId, setName: s.setName, difficulty: s.difficulty, idleSeconds, askName, touchKeyboard }
+            const next: BoothConfig = { ...config, versionId: s.versionId, setName: s.setName, difficulty: s.difficulty, idleSeconds, askName, touchKeyboard, size }
             saveBoothConfig(next)
             onSave(next)
           }}

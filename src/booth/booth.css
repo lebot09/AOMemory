@@ -5,6 +5,9 @@
   user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
   overscroll-behavior: none; touch-action: manipulation;
 }
+/* Staff menu "Screen size": scales everything inside the booth (text, buttons, keyboard, cards). */
+.booth > :not(.booth__staff-corner) { zoom: var(--booth-zoom, 1); }
+.booth .board-area { padding: calc((1 - var(--booth-board, 1)) * 20%) calc((1 - var(--booth-board, 1)) * 50%); }
 .booth__staff-corner {
   position: absolute; top: 0; left: 0; width: 72px; height: 72px; z-index: 30;
   background: transparent; border: 0; padding: 0; cursor: default; opacity: 0;
@@ -109,7 +112,7 @@
 .touch-kb__key--wide { flex-grow: 1.6; max-width: 14vw; background: var(--ao-light-blue); }
 .touch-kb__key--wide[aria-pressed='true'] { background: var(--ao-yellow); }
 .touch-kb__key--space { flex-grow: 5; max-width: none; }
-.booth-name--kb { justify-content: flex-start; gap: 2vh; padding-top: 3vh; }
+.booth-name--kb { justify-content: safe center; gap: 2vh; }
 .booth-name--kb .booth-name__input { font-size: clamp(22px, 3.4vh, 48px); padding: 0.25em 0.8em; }
 .booth-name__input[data-active] { box-shadow: 0 0 0 4px var(--ao-yellow); }
 .booth-name--kb { overflow-y: auto; gap: 1.6vh; }
