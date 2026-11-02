@@ -3,19 +3,16 @@ import { Link } from 'react-router-dom'
 import { SetupForm } from '../game/SetupForm'
 import { SettingsPanel } from '../settings/SettingsPanel'
 import { saveBoothConfig, type BoothConfig } from './config'
-import { clearScores } from './leaderboard'
 
 type Props = {
   config: BoothConfig
   onClose: () => void
   onSave: (c: BoothConfig) => void
-  onScoresCleared: () => void
 }
 
-export function StaffMenu({ config, onClose, onSave, onScoresCleared }: Props) {
+export function StaffMenu({ config, onClose, onSave }: Props) {
   const [idleSeconds, setIdleSeconds] = useState(config.idleSeconds)
   const [askName, setAskName] = useState(config.askName)
-  const [cleared, setCleared] = useState(false)
 
   const fullscreen = () => {
     const el = document.documentElement
@@ -33,12 +30,9 @@ export function StaffMenu({ config, onClose, onSave, onScoresCleared }: Props) {
 
         <div className="staff__row">
           <button type="button" className="btn btn--secondary" onClick={fullscreen}>Toggle full screen</button>
-          <button type="button" className="btn btn--secondary" disabled={cleared}
-            onClick={() => { clearScores(); onScoresCleared(); setCleared(true) }}>
-            {cleared ? "Today's times cleared" : "Clear today's best times"}
-          </button>
           <Link className="btn btn--secondary" to="/">Leave booth mode</Link>
         </div>
+        <p>To reset today's best times, sign in to <Link to="/admin/scores">Admin › Today's best</Link>.</p>
 
         <div className="staff__row">
           <label className="setup__label" htmlFor="idle">Reset after no touch for</label>

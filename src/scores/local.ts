@@ -1,11 +1,11 @@
 /**
- * "Today's best times" for the booth. Kept only in this device's browser storage,
- * only for the current day; older days are deleted automatically. No personal data
- * beyond the display name a visitor chose to type.
+ * Offline fallback for "Today's best": used only when the shared board in the database
+ * can't be reached. Kept in this device's browser storage for the current day; older days
+ * are deleted automatically. No personal data beyond the display name a player typed.
  */
-export type Score = { name: string; ms: number; moves: number; pairs: number; at: number }
+export type Score = { id: string; name: string; ms: number; moves: number; pairs: number; at: number }
 
-const PREFIX = 'ao-memory:booth-scores:'
+const PREFIX = 'ao-memory:daily-scores:'
 export const BOARD_SIZE = 10
 
 export function dayKey(d: Date = new Date()): string {

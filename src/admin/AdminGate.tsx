@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { NavLink } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { SignIn } from './SignIn'
 import { useAuth } from './useAuth'
@@ -23,6 +24,10 @@ export function AdminGate({ children }: { children: ReactNode }) {
   return (
     <div className="page admin theme-light">
       <div className="admin-bar">
+        <nav className="admin-nav" aria-label="Admin">
+          <NavLink to="/admin" end>Card sets</NavLink>
+          <NavLink to="/admin/scores">Today's best</NavLink>
+        </nav>
         <span>Signed in as {auth.session.user.email}</span>
         <button type="button" className="btn btn--secondary btn--small" onClick={() => void supabase?.auth.signOut()}>Sign out</button>
       </div>

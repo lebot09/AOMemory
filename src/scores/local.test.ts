@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { addScore, BOARD_SIZE, dayKey, rank, type Score } from './leaderboard'
+import { addScore, BOARD_SIZE, dayKey, rank, type Score } from './local'
 
-const s = (name: string, ms: number, moves = 10, at = 0): Score => ({ name, ms, moves, pairs: 6, at })
+const s = (name: string, ms: number, moves = 10, at = 0): Score => ({ id: name, name, ms, moves, pairs: 6, at })
 
 describe('leaderboard', () => {
   it('ranks by time, then moves', () => {

@@ -21,6 +21,9 @@ type GameRow = {
   id: string; version_id: string; mode: GameMode; pairs: number
   created_at: string; finished_at: string | null
 }
+type DailyScoreRow = {
+  id: string; day: string; pairs: number; name: string; ms: number; moves: number; created_at: string
+}
 type AdminRow = { user_id: string; created_at: string }
 
 type Table<R, Required extends keyof R> = {
@@ -39,6 +42,7 @@ export type Database = {
       card_set_versions: Table<CardSetVersionRow, 'set_id' | 'version'>
       cards: Table<CardRow, 'version_id' | 'position' | 'label' | 'alt_text' | 'image_path'>
       games: Table<GameRow, 'version_id' | 'mode' | 'pairs'>
+      daily_scores: Table<DailyScoreRow, 'day' | 'pairs' | 'name' | 'ms' | 'moves'>
     }
     Views: {
       playable_sets: {
@@ -55,6 +59,8 @@ export type Database = {
       create_draft_version: { Args: { p_set_id: string }; Returns: string }
       is_admin: { Args: never; Returns: boolean }
       retire_set: { Args: { p_set_id: string }; Returns: undefined }
+      submit_daily_score: { Args: { p_day: string; p_pairs: number; p_name: string; p_ms: number; p_moves: number }; Returns: string }
+      reset_daily_scores: { Args: { p_pairs?: number }; Returns: number }
     }
     Enums: { game_mode: GameMode; version_status: VersionStatus }
     CompositeTypes: { [_ in never]: never }
