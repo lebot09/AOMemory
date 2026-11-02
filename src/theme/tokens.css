@@ -34,6 +34,12 @@
   --color-card-back: var(--ao-dark-blue);
   --color-match: var(--ao-correct);
   --color-miss: var(--ao-error);
+  /* Selected option pills (AO blue, not active blue: normal-size text needs 4.5:1). */
+  --color-selected: var(--ao-blue);
+  --color-on-selected: var(--ao-white);
+  --color-outline: var(--ao-blue);
+  --color-overlay: rgb(0 27 98 / 0.85); /* guide: overlays in dark blue at 85% */
+  color-scheme: light;
 
   --font-sans: 'Inter Variable', 'Inter', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   --weight-regular: 400;
@@ -92,6 +98,38 @@
   --color-miss: #a00014;
 }
 
+/*
+ * Dark theme, built from the AO palette: a deep navy page (darker than AO dark blue,
+ * so the AO blue card backs still stand out), light text, yellow for focus and selection.
+ * The admin area always stays light (.theme-light).
+ */
+:root[data-theme='dark'] {
+  --color-bg: #000e35;
+  --color-surface: #0a1f5c;
+  --color-surface-interactive: #13307f;
+  --color-text: var(--ao-light-blue);
+  --color-heading: var(--ao-white);
+  --color-action-hover: color-mix(in srgb, var(--ao-active-blue) 80%, white);
+  --color-focus: var(--ao-yellow);
+  --color-card-back: var(--ao-blue);
+  --color-selected: var(--ao-yellow);
+  --color-on-selected: var(--ao-blue);
+  --color-outline: var(--ao-light-blue);
+  --color-overlay: rgb(0 8 32 / 0.88);
+  color-scheme: dark;
+}
+:root[data-theme='dark'][data-contrast='high'] {
+  --color-bg: #000000;
+  --color-surface: #000000;
+  --color-text: var(--ao-white);
+  --color-heading: var(--ao-white);
+  --color-action: var(--ao-yellow);
+  --color-action-hover: var(--ao-light-yellow);
+  --color-on-action: #000000;
+  --color-focus: var(--ao-yellow);
+  --color-outline: var(--ao-white);
+}
+
 :root[data-motion='reduced'] {
   --motion-fast: 0ms;
   --motion-flip: 0ms;
@@ -99,3 +137,21 @@
 @media (prefers-reduced-motion: reduce) {
   :root:not([data-motion='full']) { --motion-fast: 0ms; --motion-flip: 0ms; }
 }
+
+/* Areas that always use the light theme (admin tools). */
+.theme-light {
+  --color-bg: var(--ao-white);
+  --color-surface: var(--ao-light-gray);
+  --color-surface-interactive: var(--ao-light-blue);
+  --color-text: var(--ao-dark-gray);
+  --color-heading: var(--ao-blue);
+  --color-action: var(--ao-active-blue);
+  --color-on-action: var(--ao-white);
+  --color-focus: var(--ao-blue);
+  --color-selected: var(--ao-blue);
+  --color-on-selected: var(--ao-white);
+  --color-outline: var(--ao-blue);
+  color-scheme: light;
+  background: var(--color-bg); color: var(--color-text);
+}
+main:has(> .theme-light) { background: var(--ao-white); }

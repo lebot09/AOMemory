@@ -11,10 +11,12 @@
   background: var(--color-surface); border: 2px solid transparent;
 }
 .setup__set strong { color: var(--color-heading); }
-.setup__set input:checked + span { background: var(--ao-light-blue); border-color: var(--color-action); box-shadow: inset 6px 0 0 var(--ao-yellow); }
+.setup__set input:checked + span { background: var(--color-surface-interactive); border-color: var(--color-action); box-shadow: inset 6px 0 0 var(--ao-yellow); }
 .setup__set input:focus-visible + span { outline: 3px solid var(--color-focus); outline-offset: 3px; }
 .setup__input {
   font: inherit; min-height: var(--touch-min); padding: 0 var(--space-4); max-width: 360px;
   border: 1px solid var(--color-text); border-radius: 8px; color: var(--color-text); background: var(--color-bg);
 }
 .setup > .btn { align-self: flex-start; }
+.setup__name { display: flex; }
+.setup__name + .setup__name { margin-top: var(--space-1); }

@@ -9,7 +9,7 @@ A memory card game for web, phones, tablets and conference booth touch screens. 
 | 1 | Foundations: app shell, AO theme, accessibility settings, database and versioning | done |
 | 2 | Single-player game, touch and keyboard play, booth mode | done |
 | 3 | Admin interface for card sets | done |
-| 4 | Multiplayer: same-screen and online rooms | next |
+| 4 | Multiplayer: 2 to 4 players taking turns on one big screen | done |
 
 ## Run it
 
@@ -79,6 +79,16 @@ Every push to `main` also publishes a test copy to **https://lebot09.github.io/A
 
 In Supabase, go to **Authentication › URL Configuration** and set **Site URL** to your live address (e.g. `https://memory.example.org`), so admin confirmation emails link back to the site.
 
+## Multiplayer
+
+Multiplayer is played together on one screen (a booth display, TV or tablet), not online.
+
+- On **Play**, or in booth mode after tapping the attract screen, pick 2 to 4 players and type their names.
+- Players take turns flipping two cards. Finding a pair earns that player another turn; a miss passes the turn on.
+- The scoreboard and a large "Your turn, *Name*" banner show whose turn it is, readable from a few metres away. Screen readers hear who plays next after each move.
+- At the end, players are ranked by pairs found. **Play again** starts a rematch with the same names.
+- Names stay on the device and are never sent anywhere. Today's best times only count solo games.
+
 ## Branding
 
 Colors, type sizes and button styles follow the AO Digital Style Guide v2.0 (March 2021); see `src/theme/tokens.css`.
@@ -99,6 +109,7 @@ Open `/booth` on the booth screen (or tap **Booth mode** on the home page), then
 
 ## Accessibility
 
+- Light and dark themes: a **Dark mode** button sits next to Quit while playing, and **Settings** also offers "Follow device". The dark theme is built from the AO palette (deep navy page, AO blue card backs, yellow highlights). The admin area always stays light.
 - Display settings for high contrast, three text sizes and reduced motion. The choice is remembered on the device, and the device's reduced-motion preference is followed by default.
 - All touch targets are at least 48px (72px on booth-size screens), with visible focus rings and a skip link.
 - White on AO active blue (3.7:1) is only used for large bold button text. High-contrast mode switches buttons to AO blue. `src/theme/contrast.test.ts` checks every color pairing.

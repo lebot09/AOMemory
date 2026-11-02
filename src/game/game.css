@@ -9,11 +9,11 @@
 .hud__item { display: inline-flex; align-items: baseline; gap: var(--space-2); }
 .hud__k { font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text); }
 .hud__v { font-weight: var(--weight-semibold); color: var(--color-heading); font-size: var(--fs-h3); font-variant-numeric: tabular-nums; }
-.hud__exit { margin-left: auto; }
+.hud__theme { margin-left: auto; }
 
 .results-backdrop {
   position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: var(--space-4);
-  background: rgb(0 27 98 / 0.85); /* guide: overlays in dark blue at 85% */
+  background: var(--color-overlay);
 }
 .results {
   background: var(--color-bg); border-radius: var(--radius-card); padding: var(--space-8);
@@ -26,3 +26,29 @@
 .results__stats dt { font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 0.06em; }
 .results__stats dd { margin: 0; font-size: var(--fs-h2); font-weight: var(--weight-semibold); color: var(--color-heading); font-variant-numeric: tabular-nums; }
 .results__actions { display: flex; justify-content: center; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-6); }
+
+/* Multiplayer scoreboard: current player in AO yellow. */
+.scoreboard { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.scoreboard__player {
+  display: inline-flex; align-items: center; gap: var(--space-3); min-height: var(--touch-min);
+  padding: var(--space-1) var(--space-4); border-radius: var(--radius-pill);
+  background: var(--color-surface); border: 2px solid transparent;
+  transition: background var(--motion-fast) var(--ease-out);
+}
+.scoreboard__player[data-active] { background: var(--ao-yellow); border-color: var(--ao-blue); }
+.scoreboard__name { font-weight: var(--weight-semibold); color: var(--color-heading); }
+.scoreboard__pairs { font-weight: 700; font-size: var(--fs-h3); color: var(--color-heading); font-variant-numeric: tabular-nums; }
+.scoreboard__player[data-active] :is(.scoreboard__name, .scoreboard__pairs) { color: var(--ao-blue); }
+.scoreboard__turn { font-size: var(--fs-small); font-weight: 700; color: var(--ao-blue); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.results__players { list-style: none; padding: 0; margin: var(--space-4) 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.results__players li { display: flex; justify-content: space-between; padding: var(--space-2) var(--space-4); border-radius: 8px; background: var(--color-surface); }
+.results__players li:first-child { background: var(--ao-yellow); color: var(--ao-blue); }
+
+/* Shared-screen turn marker: readable from a few metres away, pops in on each new turn. */
+.turn-banner {
+  margin: 0; text-align: center; font-size: clamp(20px, 3.2vh, 48px); font-weight: 700; color: var(--color-heading);
+  animation: turn-pop var(--motion-flip) var(--ease-out);
+}
+.turn-banner__name { background: var(--ao-yellow); color: var(--ao-blue); padding: 0 0.35em; border-radius: 0.2em; }
+@keyframes turn-pop { from { transform: scale(0.9); opacity: 0; } to { transform: none; opacity: 1; } }

@@ -16,6 +16,8 @@ const AO = {
   darkBlue: '#001b62', white: '#ffffff', lightBlue: '#edf0f6', lightGray: '#f7f7f7',
 }
 
+const DARK = { bg: '#000e35', surface: '#0a1f5c' }
+
 describe('AO color pairings used by the app meet WCAG AA', () => {
   it.each([
     ['body text on white', AO.darkGray, AO.white, 4.5],
@@ -28,6 +30,19 @@ describe('AO color pairings used by the app meet WCAG AA', () => {
     ['white on dark blue (card backs, booth)', AO.white, AO.darkBlue, 4.5],
     ['white on active blue buttons (large bold text only)', AO.white, AO.activeBlue, 3],
     ['active blue outline/links on white (non-text, 3:1)', AO.activeBlue, AO.white, 3],
+  ])('%s', (_name, fg, bg, min) => {
+    expect(contrast(fg, bg)).toBeGreaterThanOrEqual(min)
+  })
+
+  it.each([
+    ['dark: body text on page', AO.lightBlue, DARK.bg, 4.5],
+    ['dark: body text on surface', AO.lightBlue, DARK.surface, 4.5],
+    ['dark: headings on surface', AO.white, DARK.surface, 4.5],
+    ['dark: active blue links on page', AO.activeBlue, DARK.bg, 4.5],
+    ['dark: secondary buttons on surface (large bold text)', AO.activeBlue, DARK.surface, 3],
+    ['dark: AO blue on yellow (selected options)', AO.blue, AO.yellow, 4.5],
+    ['dark: yellow focus ring on page (non-text, 3:1)', AO.yellow, DARK.bg, 3],
+    ['dark: card backs stand out from page (non-text, 1.4:1 plus edge)', AO.blue, DARK.bg, 1.4],
   ])('%s', (_name, fg, bg, min) => {
     expect(contrast(fg, bg)).toBeGreaterThanOrEqual(min)
   })
