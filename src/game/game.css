@@ -26,3 +26,20 @@
 .results__stats dt { font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 0.06em; }
 .results__stats dd { margin: 0; font-size: var(--fs-h2); font-weight: var(--weight-semibold); color: var(--color-heading); font-variant-numeric: tabular-nums; }
 .results__actions { display: flex; justify-content: center; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-6); }
+
+/* Multiplayer scoreboard: current player in AO yellow. */
+.scoreboard { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.scoreboard__player {
+  display: inline-flex; align-items: center; gap: var(--space-3); min-height: var(--touch-min);
+  padding: var(--space-1) var(--space-4); border-radius: var(--radius-pill);
+  background: var(--color-surface); border: 2px solid transparent;
+  transition: background var(--motion-fast) var(--ease-out);
+}
+.scoreboard__player[data-active] { background: var(--ao-yellow); border-color: var(--ao-blue); }
+.scoreboard__name { font-weight: var(--weight-semibold); color: var(--ao-blue); }
+.scoreboard__pairs { font-weight: 700; font-size: var(--fs-h3); color: var(--ao-blue); font-variant-numeric: tabular-nums; }
+.scoreboard__turn { font-size: var(--fs-small); font-weight: 700; color: var(--ao-blue); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.results__players { list-style: none; padding: 0; margin: var(--space-4) 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.results__players li { display: flex; justify-content: space-between; padding: var(--space-2) var(--space-4); border-radius: 8px; background: var(--color-surface); }
+.results__players li:first-child { background: var(--ao-yellow); color: var(--ao-blue); }

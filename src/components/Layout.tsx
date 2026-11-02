@@ -10,6 +10,7 @@ export function Layout() {
         <Link to="/" className="site-header__home"><Brand /></Link>
         <nav aria-label="Main">
           <NavLink to="/play">Play</NavLink>
+          <NavLink to="/online">Online</NavLink>
           <NavLink to="/settings">Settings</NavLink>
           <NavLink to="/admin">Admin</NavLink>
         </nav>

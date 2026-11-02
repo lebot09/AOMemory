@@ -9,7 +9,7 @@ A memory card game for web, phones, tablets and conference booth touch screens. 
 | 1 | Foundations: app shell, AO theme, accessibility settings, database and versioning | done |
 | 2 | Single-player game, touch and keyboard play, booth mode | done |
 | 3 | Admin interface for card sets | done |
-| 4 | Multiplayer: same-screen and online rooms | next |
+| 4 | Multiplayer: same-screen and online rooms | done |
 
 ## Run it
 
@@ -74,6 +74,15 @@ Turn on the free SSL certificate in hPanel. HTTPS is required for the installabl
 ### Supabase sign-in links
 
 In Supabase, go to **Authentication › URL Configuration** and set **Site URL** to your live address (e.g. `https://memory.example.org`), so admin confirmation emails link back to the site.
+
+## Multiplayer
+
+- **Same screen:** on **Play**, pick 2 to 4 players and type their names. Players take turns; finding a pair earns another turn. Booth mode offers 1 or 2 players. Today's best times only count solo games.
+- **Online:** on **Online**, one person hosts by picking an approved card set and difficulty, and gets a 5-letter game code and an invite link. Up to 4 players join from their own devices, then the host starts the game.
+  - The server deals the cards and checks every flip (`flip_tile`), so nobody can peek or play out of turn. Face-down cards are never sent to the browser.
+  - Players are anonymous: a display name and a random token kept on their device (a refresh keeps their seat). Rooms and names are deleted after a day.
+  - Live updates use Supabase Realtime on the `rooms` table, with polling every 4 seconds as a fallback.
+  - The built-in demo set can't be used online, because the server needs a real card set.
 
 ## Branding
 
