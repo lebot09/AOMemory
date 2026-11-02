@@ -1,0 +1,43 @@
+# Apache config for Hostinger (and other Apache hosts). Upload with the rest of dist/.
+Options -MultiViews
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Force HTTPS (needed for the installable app / offline mode).
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Send every route (/play, /booth, /admin/...) to the app; real files are served as-is.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  # Missing files with an extension (e.g. /old.png) get a real 404, not the app.
+  RewriteCond %{REQUEST_URI} !\.[A-Za-z0-9]+$
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType image/svg+xml .svg
+  AddType font/woff2 .woff2
+  AddType text/javascript .js .mjs
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Hashed build files (name-AbC123xy.js etc.) never change: cache for a year.
+  <FilesMatch "-[A-Za-z0-9_-]{8}\.(js|css|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Always check for a new app version.
+  <FilesMatch "^(index\.html|sw\.js|registerSW\.js|manifest\.webmanifest|workbox-.*\.js)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
