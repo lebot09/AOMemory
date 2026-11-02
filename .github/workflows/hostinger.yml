@@ -1,0 +1,37 @@
+# Builds the site on every push to main and publishes the ready-to-serve files
+# to the `hostinger` branch. Point Hostinger's Git deployment (hPanel > Advanced > Git)
+# at that branch with an empty install path, or download it as a zip for File Manager.
+name: Build for Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Build
+        run: |
+          cp .env.example .env
+          npm run build
+      - name: Publish dist/ to the hostinger branch
+        run: |
+          cd dist
+          git init -q -b hostinger
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Build ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" hostinger

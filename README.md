@@ -52,7 +52,28 @@ select id from auth.users where email = 'person@example.org';
 
 ## Hosting
 
-It's a static site: `npm run build` produces `dist/`. `vercel.json` (Vercel) and `public/_redirects` (Netlify) send every page to the app. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` from `.env.example` in the host's environment settings.
+It's a static site: `npm run build` produces `dist/`, and the Supabase settings in `.env` are built into it.
+
+### Hostinger
+
+`public/.htaccess` is included in the build. It sends every page (`/play`, `/booth`, `/admin/...`) to the app, forces HTTPS, and sets cache headers so updates show up right away. It was tested on Apache.
+
+**Option A: automatic (recommended).** Every push to `main` runs the **Build for Hostinger** GitHub Action. It runs the tests, builds the site and puts the ready-to-serve files on the `hostinger` branch. To set it up in hPanel:
+1. Go to **Websites › your site › Advanced › Git**.
+2. Add the repository `https://github.com/lebot09/AOMemory.git` with branch **hostinger** and an empty install path (that means `public_html`). For a private repo, add the SSH key that hPanel shows as a deploy key in GitHub (**Settings › Deploy keys**).
+3. Click **Deploy**. To update automatically, copy the webhook URL hPanel shows into GitHub (**Settings › Webhooks**).
+
+**Option B: manual upload.** Run `npm run build` locally, then upload the *contents* of `dist/` (including the hidden `.htaccess`) into `public_html` with hPanel's File Manager or FTP.
+
+Turn on the free SSL certificate in hPanel. HTTPS is required for the installable, offline app.
+
+### Vercel / Netlify
+
+`vercel.json` (Vercel) and `public/_redirects` (Netlify) handle routing. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` from `.env.example` in the host's environment settings.
+
+### Supabase sign-in links
+
+In Supabase, go to **Authentication › URL Configuration** and set **Site URL** to your live address (e.g. `https://memory.example.org`), so admin confirmation emails link back to the site.
 
 ## Branding
 
