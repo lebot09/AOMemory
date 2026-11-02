@@ -114,7 +114,7 @@ export function SetupForm({ initial, onStart, askName = true, submitLabel = 'Sta
                   onFocus={(e) => e.target.select()} />
               </div>
             ))}
-            <small className="setup__note">Names are only shown on this screen. Nothing is saved or sent anywhere.</small>
+            <small className="setup__note">{names.length === 1 ? "Your name is shown with your time on today's best. A nickname is fine." : 'Names are only shown on this screen. Nothing is saved or sent anywhere.'}</small>
           </fieldset>
         </>
       )}
