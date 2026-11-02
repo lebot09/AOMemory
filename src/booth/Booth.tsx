@@ -104,8 +104,9 @@ export function Booth() {
       )}
 
       {phase === 'attract' && (
-        <aside className="booth-attract__scores" aria-label="Today's best times">
-          <h2>Today's best</h2>
+        <aside className="booth-attract__scores" aria-labelledby="booth-scores-title">
+          <h2 id="booth-scores-title">Fastest Minds <em className="booth-attract__scores-mode">Single Player</em> Dashboard</h2>
+          <p className="booth-attract__scores-sub">Today's best times</p>
           <DailyBoard board={daily.board} limit={5} />
         </aside>
       )}
