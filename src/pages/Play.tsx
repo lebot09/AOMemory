@@ -1,45 +1,54 @@
-import { useEffect, useState } from 'react'
-import { fetchPlayableSets } from '../lib/cardSets'
-import type { PlayableSet } from '../lib/database.types'
-
-type State = { status: 'loading' } | { status: 'error' } | { status: 'ready'; sets: PlayableSet[] }
+import { useState } from 'react'
+import { recordGame } from '../lib/cardSets'
+import { DEMO_SET_ID } from '../game/demoSet'
+import { DIFFICULTY_PAIRS } from '../game/engine'
+import { Game } from '../game/Game'
+import { SetupForm, type Setup } from '../game/SetupForm'
+import { useLoadedFaces } from '../game/useLoadedFaces'
 
 export function Play() {
-  const [state, setState] = useState<State>({ status: 'loading' })
+  const [setup, setSetup] = useState<Setup | null>(null)
+  const [seed, setSeed] = useState(() => Date.now())
+  const loaded = useLoadedFaces(setup?.versionId ?? null)
 
-  const load = () => {
-    setState({ status: 'loading' })
-    fetchPlayableSets()
-      .then((sets) => setState({ status: 'ready', sets }))
-      .catch((e: unknown) => {
-        console.error('Loading card sets failed', e)
-        setState({ status: 'error' })
-      })
+  const start = (s: Setup) => {
+    setSeed(Date.now())
+    setSetup(s)
+    if (s.versionId !== DEMO_SET_ID) void recordGame(s.versionId, 'solo', DIFFICULTY_PAIRS[s.difficulty])
   }
-  useEffect(load, [])
+
+  if (!setup) {
+    return (
+      <div className="page">
+        <h1>New game</h1>
+        <SetupForm onStart={start} />
+      </div>
+    )
+  }
+
+  if (loaded.status !== 'ready') {
+    return (
+      <div className="page" aria-live="polite">
+        {loaded.status === 'error' ? (
+          <div role="alert">
+            <p>Couldn't load this card set. Check the internet connection, or pick the demo set.</p>
+            <button className="btn" type="button" onClick={() => setSetup(null)}>Back</button>
+          </div>
+        ) : <p>Shuffling cards…</p>}
+      </div>
+    )
+  }
 
   return (
-    <div className="page">
-      <h1>Choose a card set</h1>
-      <div aria-live="polite">
-        {state.status === 'loading' && <p>Loading card sets…</p>}
-        {state.status === 'error' && (
-          <div role="alert">
-            <p>Couldn't load card sets. Check the internet connection and try again.</p>
-            <button className="btn" type="button" onClick={load}>Try again</button>
-          </div>
-        )}
-        {state.status === 'ready' && state.sets.length === 0 && (
-          <p>No card sets have been approved yet. An admin can add one in the admin area.</p>
-        )}
-        {state.status === 'ready' && state.sets.length > 0 && (
-          <ul>
-            {state.sets.map((s) => (
-              <li key={s.version_id}>{s.name} (version {s.version}, {s.card_count} cards)</li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
+    <Game
+      key={seed}
+      faces={loaded.faces}
+      pairs={DIFFICULTY_PAIRS[setup.difficulty]}
+      playerName={setup.playerName}
+      setName={setup.setName}
+      seed={seed}
+      onExit={() => setSetup(null)}
+      onPlayAgain={() => start(setup)}
+    />
   )
 }

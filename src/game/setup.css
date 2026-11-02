@@ -1,0 +1,20 @@
+.setup { display: flex; flex-direction: column; gap: var(--space-6); max-width: 720px; }
+.setup__group { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.setup__group legend, .setup__label { font-weight: var(--weight-semibold); font-size: var(--fs-h4); color: var(--color-heading); margin-bottom: var(--space-2); padding: 0; }
+.setup__note { color: var(--color-text); }
+.setup__sets { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-3); }
+.setup__set { position: relative; }
+.setup__set input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.setup__set span {
+  display: flex; flex-direction: column; gap: var(--space-1); min-height: 72px; justify-content: center;
+  padding: var(--space-3) var(--space-4); border-radius: var(--radius-card);
+  background: var(--color-surface); border: 2px solid transparent;
+}
+.setup__set strong { color: var(--color-heading); }
+.setup__set input:checked + span { background: var(--ao-light-blue); border-color: var(--color-action); box-shadow: inset 6px 0 0 var(--ao-yellow); }
+.setup__set input:focus-visible + span { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.setup__input {
+  font: inherit; min-height: var(--touch-min); padding: 0 var(--space-4); max-width: 360px;
+  border: 1px solid var(--color-text); border-radius: 8px; color: var(--color-text); background: var(--color-bg);
+}
+.setup > .btn { align-self: flex-start; }

@@ -22,6 +22,7 @@ describe('AO color pairings used by the app meet WCAG AA', () => {
     ['body text on light gray', AO.darkGray, AO.lightGray, 4.5],
     ['headings on white', AO.blue, AO.white, 4.5],
     ['white text on AO blue header', AO.white, AO.blue, 4.5],
+    ['white on AO blue (selected options)', AO.white, AO.blue, 4.5],
     ['AO yellow on AO blue (active nav, highlights)', AO.yellow, AO.blue, 4.5],
     ['AO blue on AO yellow (badges)', AO.blue, AO.yellow, 4.5],
     ['white on dark blue (card backs, booth)', AO.white, AO.darkBlue, 4.5],

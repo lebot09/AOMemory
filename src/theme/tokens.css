@@ -1,7 +1,7 @@
 /*
  * AO brand tokens, from the AO Digital Style Guide v2.0 (March 2021), pages 8-12 and 35-38.
- * Font: the guide specifies Suisse Int'l (licensed). Until AO's web font files are added
- * to src/theme/fonts/, Inter is used as the closest free match.
+ * Font: the guide specifies Suisse Int'l (licensed). We use Inter, a free font close to it,
+ * with Arial as the fallback.
  */
 :root {
   /* Primary */
@@ -35,7 +35,7 @@
   --color-match: var(--ao-correct);
   --color-miss: var(--ao-error);
 
-  --font-sans: 'Suisse Intl', 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter Variable', 'Inter', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   --weight-regular: 400;
   --weight-semibold: 600;
 
