@@ -99,7 +99,7 @@ export function Booth() {
             {[0, 1, 2, 3].map((i) => <span key={i} className="booth-attract__card" style={{ animationDelay: `${i * 0.6}s` }} />)}
           </span>
           <span className="booth-attract__cta">Tap to play</span>
-          <span className="booth-attract__sub">Find all the matching pairs as fast as you can</span>
+          <span className="booth-attract__sub">Sharp mind. Fast hands. Ready?<br />Match the pairs. Race the clock. Set your best time.</span>
         </button>
       )}
 
