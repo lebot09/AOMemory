@@ -67,6 +67,10 @@ It's a static site: `npm run build` produces `dist/`, and the Supabase settings 
 
 Turn on the free SSL certificate in hPanel. HTTPS is required for the installable, offline app.
 
+### GitHub Pages (test copy)
+
+Every push to `main` also publishes a test copy to **https://lebot09.github.io/AOMemory/** (`.github/workflows/pages.yml`). One-time setup: go to **Settings › Pages** and set Source to **GitHub Actions**. Pages on a private repository needs a paid GitHub plan (Pro, Team or Enterprise); on a free plan, the repository has to be public.
+
 ### Vercel / Netlify
 
 `vercel.json` (Vercel) and `public/_redirects` (Netlify) handle routing. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` from `.env.example` in the host's environment settings.

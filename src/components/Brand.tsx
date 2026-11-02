@@ -4,7 +4,7 @@
  * clear space of half the logo height, never modified or combined into one mark.
  */
 export function AoLogo({ variant = 'blue', height = 32 }: { variant?: 'blue' | 'white'; height?: number }) {
-  return <img src={`/brand/ao-logo-${variant}.svg`} alt="AO" height={height} width={Math.round(height * 1.885)} draggable={false} />
+  return <img src={`${import.meta.env.BASE_URL}brand/ao-logo-${variant}.svg`} alt="AO" height={height} width={Math.round(height * 1.885)} draggable={false} />
 }
 
 export function Brand() {
