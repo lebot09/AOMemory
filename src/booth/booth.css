@@ -41,7 +41,7 @@
 @keyframes attract-pulse { 50% { transform: scale(1.05); } }
 :root[data-motion='reduced'] .booth-attract__cta { animation: none; }
 @media (prefers-reduced-motion: reduce) { :root:not([data-motion='full']) .booth-attract__cta { animation: none; } }
-.booth-attract__sub { font-size: clamp(16px, 2.4vh, 32px); opacity: 0.9; }
+.booth-attract__sub { font-size: clamp(16px, 2.4vh, 32px); opacity: 0.9; text-align: center; line-height: 1.5; }
 
 .booth-attract__scores {
   position: absolute; right: 3vw; bottom: 4vh; width: min(30vw, 480px);
