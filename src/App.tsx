@@ -5,8 +5,10 @@ import { Play } from './pages/Play'
 import { Admin } from './pages/Admin'
 import { SettingsPage } from './pages/SettingsPage'
 import { SettingsProvider } from './settings/SettingsContext'
+import { Booth } from './booth/Booth'
 
 const router = createBrowserRouter([
+  { path: '/booth', element: <Booth /> },
   {
     element: <Layout />,
     children: [

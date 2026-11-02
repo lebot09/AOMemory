@@ -7,8 +7,8 @@ A memory card game for web, phones, tablets and conference booth touch screens. 
 | Step | What | State |
 | --- | --- | --- |
 | 1 | Foundations: app shell, AO theme, accessibility settings, database and versioning | done |
-| 2 | Single-player game, touch and keyboard play, booth mode | next |
-| 3 | Admin interface for card sets | planned |
+| 2 | Single-player game, touch and keyboard play, booth mode | done |
+| 3 | Admin interface for card sets | next |
 | 4 | Multiplayer: same-screen and online rooms | planned |
 
 ## Run it
@@ -17,7 +17,7 @@ A memory card game for web, phones, tablets and conference booth touch screens. 
 cp .env.example .env   # Supabase URL + publishable key (safe for the browser)
 npm install
 npm run dev            # http://localhost:5173
-npm test               # unit tests (brand color contrast)
+npm test               # unit tests (game rules, layout, leaderboard, color contrast)
 npm run build          # production build with offline support
 ```
 
@@ -45,9 +45,19 @@ select id from auth.users where email = 'person@example.org';
 
 Colors, type sizes and button styles follow the AO Digital Style Guide v2.0 (March 2021); see `src/theme/tokens.css`.
 
-Still to add:
-- **Logo:** the official AO logo SVG from brand.aofoundation.org goes at `public/brand/ao-logo.svg`. Then set `HAS_OFFICIAL_LOGO` in `src/components/Brand.tsx`. A placeholder wordmark is used until then.
-- **Font:** Suisse Int'l is licensed. If AO provides web font files, add them and an `@font-face` for `Suisse Intl`. Until then, Inter is used.
+- **Logo:** `public/brand/ao-logo-blue.svg` and `ao-logo-white.svg` are the exact vector from page 7 of the style guide. Blue goes on light backgrounds and white on blue, with clear space of half the logo height.
+- **Font:** Suisse Int'l is licensed, so the app uses Inter, a free font close to it, with Arial as the fallback.
+
+## Booth mode
+
+Open `/booth` on the booth screen (or tap **Booth mode** on the home page), then use the staff menu to go full screen.
+
+- An attract screen with the AO logo and today's best times runs until someone taps.
+- Players can enter a display name (optional) and play. Results show their rank for the day.
+- If nobody touches the screen for 45 seconds (configurable), "Still playing?" appears. After 10 more seconds it resets to the attract screen.
+- **Staff menu:** tap the top-left corner 5 times quickly, or press Ctrl+Shift+S. From there you can choose the card set and difficulty, set the idle time, turn name entry on or off, clear today's times, toggle full screen and change display settings.
+- Today's best times are stored only in that screen's browser, and older days are deleted automatically.
+- After one online visit, the game works offline. The built-in "Shapes (demo)" set is always available.
 
 ## Accessibility
 

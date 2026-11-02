@@ -1,5 +1,5 @@
 import { supabase } from './supabase'
-import type { Card, PlayableSet } from './database.types'
+import type { Card, GameMode, PlayableSet } from './database.types'
 
 /** Fail fast on bad booth Wi-Fi instead of showing a spinner forever. */
 const TIMEOUT_MS = 8000
@@ -26,4 +26,12 @@ export async function fetchVersionCards(versionId: string): Promise<Card[]> {
     .abortSignal(AbortSignal.timeout(TIMEOUT_MS))
   if (error) throw error
   return data ?? []
+}
+
+/** Record that a game started on an exact version (no player data). Best effort: never blocks play. */
+export async function recordGame(versionId: string, mode: GameMode, pairs: number): Promise<void> {
+  if (!supabase) return
+  try {
+    await supabase.from('games').insert({ version_id: versionId, mode, pairs })
+  } catch { /* offline: fine */ }
 }
