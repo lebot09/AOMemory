@@ -105,6 +105,7 @@ Open `/booth` on the booth screen (or tap **Booth mode** on the home page), then
 
 ## Accessibility
 
+- Light and dark themes: a **Dark mode** button sits next to Quit while playing, and **Settings** also offers "Follow device". The dark theme is built from the AO palette (deep navy page, AO blue card backs, yellow highlights). The admin area always stays light.
 - Display settings for high contrast, three text sizes and reduced motion. The choice is remembered on the device, and the device's reduced-motion preference is followed by default.
 - All touch targets are at least 48px (72px on booth-size screens), with visible focus rings and a skip link.
 - White on AO active blue (3.7:1) is only used for large bold button text. High-contrast mode switches buttons to AO blue. `src/theme/contrast.test.ts` checks every color pairing.

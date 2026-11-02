@@ -11,7 +11,7 @@
   background: var(--color-surface); border: 2px solid transparent;
 }
 .setup__set strong { color: var(--color-heading); }
-.setup__set input:checked + span { background: var(--ao-light-blue); border-color: var(--color-action); box-shadow: inset 6px 0 0 var(--ao-yellow); }
+.setup__set input:checked + span { background: var(--color-surface-interactive); border-color: var(--color-action); box-shadow: inset 6px 0 0 var(--ao-yellow); }
 .setup__set input:focus-visible + span { outline: 3px solid var(--color-focus); outline-offset: 3px; }
 .setup__input {
   font: inherit; min-height: var(--touch-min); padding: 0 var(--space-4); max-width: 360px;

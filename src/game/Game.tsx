@@ -3,6 +3,7 @@ import { Board } from './Board'
 import { elapsedMs, formatTime, pairsFound, pairsTotal, type Face, type GameState, type Player } from './engine'
 import { Scoreboard, winnerText } from './Scoreboard'
 import { useGame } from './useGame'
+import { ThemeToggle } from '../settings/ThemeToggle'
 import './game.css'
 
 export type GameResult = { name: string; ms: number; moves: number; pairs: number; players: Player[] }
@@ -64,7 +65,8 @@ export function Game(props: Props) {
         <span className="hud__item"><span className="hud__k">Pairs</span> <span className="hud__v">{pairsFound(state)}/{pairsTotal(state)}</span></span>
         <span className="hud__item"><span className="hud__k">Moves</span> <span className="hud__v">{state.moves}</span></span>
         <span className="hud__item"><span className="hud__k">Time</span> <span className="hud__v" aria-hidden="true">{formatTime(ms)}</span></span>
-        <button type="button" className="btn btn--secondary btn--small hud__exit" onClick={props.onExit}>Quit</button>
+        <ThemeToggle className="hud__theme" />
+        <button type="button" className="btn btn--secondary btn--small" onClick={props.onExit}>Quit</button>
       </section>
       {multi && <Scoreboard players={state.players} current={state.current} finished={finished} />}
       {multi && !finished && (

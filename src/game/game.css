@@ -9,11 +9,11 @@
 .hud__item { display: inline-flex; align-items: baseline; gap: var(--space-2); }
 .hud__k { font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text); }
 .hud__v { font-weight: var(--weight-semibold); color: var(--color-heading); font-size: var(--fs-h3); font-variant-numeric: tabular-nums; }
-.hud__exit { margin-left: auto; }
+.hud__theme { margin-left: auto; }
 
 .results-backdrop {
   position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: var(--space-4);
-  background: rgb(0 27 98 / 0.85); /* guide: overlays in dark blue at 85% */
+  background: var(--color-overlay);
 }
 .results {
   background: var(--color-bg); border-radius: var(--radius-card); padding: var(--space-8);
@@ -36,8 +36,9 @@
   transition: background var(--motion-fast) var(--ease-out);
 }
 .scoreboard__player[data-active] { background: var(--ao-yellow); border-color: var(--ao-blue); }
-.scoreboard__name { font-weight: var(--weight-semibold); color: var(--ao-blue); }
-.scoreboard__pairs { font-weight: 700; font-size: var(--fs-h3); color: var(--ao-blue); font-variant-numeric: tabular-nums; }
+.scoreboard__name { font-weight: var(--weight-semibold); color: var(--color-heading); }
+.scoreboard__pairs { font-weight: 700; font-size: var(--fs-h3); color: var(--color-heading); font-variant-numeric: tabular-nums; }
+.scoreboard__player[data-active] :is(.scoreboard__name, .scoreboard__pairs) { color: var(--ao-blue); }
 .scoreboard__turn { font-size: var(--fs-small); font-weight: 700; color: var(--ao-blue); text-transform: uppercase; letter-spacing: 0.05em; }
 
 .results__players { list-style: none; padding: 0; margin: var(--space-4) 0; display: flex; flex-direction: column; gap: var(--space-2); }
