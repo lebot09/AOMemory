@@ -13,6 +13,7 @@ type Props = {
 export function StaffMenu({ config, onClose, onSave }: Props) {
   const [idleSeconds, setIdleSeconds] = useState(config.idleSeconds)
   const [askName, setAskName] = useState(config.askName)
+  const [touchKeyboard, setTouchKeyboard] = useState(config.touchKeyboard)
 
   const fullscreen = () => {
     const el = document.documentElement
@@ -43,6 +44,10 @@ export function StaffMenu({ config, onClose, onSave }: Props) {
             <input type="checkbox" checked={askName} onChange={(e) => setAskName(e.target.checked)} />
             Ask players for a name
           </label>
+          <label className="staff__check">
+            <input type="checkbox" checked={touchKeyboard} onChange={(e) => setTouchKeyboard(e.target.checked)} />
+            On-screen keyboard for names
+          </label>
         </div>
 
         <SetupForm
@@ -50,7 +55,7 @@ export function StaffMenu({ config, onClose, onSave }: Props) {
           submitLabel="Save and restart"
           initial={{ versionId: config.versionId, difficulty: config.difficulty }}
           onStart={(s) => {
-            const next: BoothConfig = { ...config, versionId: s.versionId, setName: s.setName, difficulty: s.difficulty, idleSeconds, askName }
+            const next: BoothConfig = { ...config, versionId: s.versionId, setName: s.setName, difficulty: s.difficulty, idleSeconds, askName, touchKeyboard }
             saveBoothConfig(next)
             onSave(next)
           }}

@@ -10,6 +10,7 @@ import { loadBoothConfig, type BoothConfig } from './config'
 import { DailyBoard, rankText } from '../scores/DailyBoard'
 import { useDailyBoard } from '../scores/useDailyBoard'
 import { StaffMenu } from './StaffMenu'
+import { TouchKeyboard } from './TouchKeyboard'
 import './booth.css'
 
 type Phase = 'attract' | 'name' | 'playing'
@@ -25,6 +26,8 @@ export function Booth() {
   const loaded = useLoadedFaces(config.versionId)
   const [phase, setPhase] = useState<Phase>('attract')
   const [names, setNames] = useState<string[]>([''])
+  const [activeName, setActiveName] = useState(0)
+  const NAME_MAX = 16
   const [seed, setSeed] = useState(() => Date.now())
   // Shared "Today's best" for this board size; refreshed so the attract screen shows other screens' times.
   const daily = useDailyBoard(pairs, 30)
@@ -108,23 +111,36 @@ export function Booth() {
       )}
 
       {phase === 'name' && (
-        <form className="booth-name" onSubmit={(e) => { e.preventDefault(); begin(names) }}>
+        <form className={`booth-name${config.touchKeyboard ? ' booth-name--kb' : ''}`} onSubmit={(e) => { e.preventDefault(); begin(names) }}>
           <div className="booth-players" role="radiogroup" aria-label="Number of players">
             {Array.from({ length: MAX_PLAYERS }, (_, i) => i + 1).map((n) => (
               <button key={n} type="button" role="radio" aria-checked={names.length === n}
-                className="booth-players__opt" onClick={() => { activity(); setNames((p) => Array.from({ length: n }, (_, k) => p[k] ?? '')) }}>
+                className="booth-players__opt" onClick={() => { activity(); setActiveName(0); setNames((p) => Array.from({ length: n }, (_, k) => p[k] ?? '')) }}>
                 {n === 1 ? '1 player' : `${n} players`}
               </button>
             ))}
           </div>
           <h1>{names.length === 1 ? "What's your name?" : "What are your names?"}</h1>
-          <p>{names.length === 1 ? "It's only shown on today's best times on this screen." : 'Play together on this screen. Take turns, and find a pair to go again.'}</p>
+          <p>{names.length === 1 ? "It's shown with your time on today's best. A nickname is fine." : 'Play together on this screen. Take turns, and find a pair to go again.'}</p>
           {names.map((n, i) => (
-            <input key={i} aria-label={names.length === 1 ? 'Your name' : `Player ${i + 1} name`} value={n} maxLength={16}
+            <input key={i} aria-label={names.length === 1 ? 'Your name' : `Player ${i + 1} name`} value={n} maxLength={NAME_MAX}
               autoFocus={i === 0} autoComplete="off" className="booth-name__input"
+              // With the on-screen keyboard, keep the device's own keyboard from popping up.
+              inputMode={config.touchKeyboard ? 'none' : undefined}
+              data-active={(config.touchKeyboard && i === Math.min(activeName, names.length - 1)) || undefined}
+              onFocus={() => setActiveName(i)}
               placeholder={names.length === 1 ? 'Your name' : `Player ${i + 1}`}
               onChange={(e) => { activity(); setNames((p) => p.map((x, k) => (k === i ? e.target.value : x))) }} />
           ))}
+          {config.touchKeyboard && (() => {
+            const idx = Math.min(activeName, names.length - 1)
+            const edit = (f: (v: string) => string) => setNames((p) => p.map((x, k) => (k === idx ? f(x).slice(0, NAME_MAX) : x)))
+            return (
+              <TouchKeyboard value={names[idx]} onActivity={activity}
+                onKey={(ch) => edit((v) => (ch === ' ' && (v === '' || v.endsWith(' ')) ? v : v + ch))}
+                onBackspace={() => edit((v) => v.slice(0, -1))} />
+            )
+          })()}
           <div className="booth-name__actions">
             <button type="submit" className="btn">Start</button>
             {names.length === 1 && <button type="button" className="btn btn--secondary booth-name__guest" onClick={() => begin(['Guest'])}>Play as guest</button>}
