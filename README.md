@@ -112,7 +112,7 @@ Open `/booth` on the booth screen (or tap **Booth mode** on the home page), then
 - Players can enter a display name (optional) and play. Results show their rank for the day.
 - **On-screen keyboard:** names are typed on a large keyboard shown on screen (with capitals, accents and digits), so the booth needs no physical keyboard. The device's own pop-up keyboard is suppressed. Turn it off in the staff menu if a keyboard is attached.
 - If nobody touches the screen for 45 seconds (configurable), "Still playing?" appears. After 10 more seconds it resets to the attract screen.
-- **Staff menu:** tap the top-left corner 5 times quickly, or press Ctrl+Shift+S. From there you can choose the card set and difficulty, set the idle time, turn name entry and the on-screen keyboard on or off, toggle full screen and change display settings. Today's best times are reset in **Admin › Today's best**.
+- **Staff menu:** tap the top-left corner 5 times quickly, or press Ctrl+Shift+S. From there you can choose the card set and difficulty, set the screen size (Small, Medium or Large), set the idle time, turn name entry and the on-screen keyboard on or off, toggle full screen and change display settings. Today's best times are reset in **Admin › Today's best**.
 - After one online visit, the game works offline. The built-in "Shapes (demo)" set is always available.
 
 ## Accessibility

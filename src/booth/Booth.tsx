@@ -6,7 +6,7 @@ import { DIFFICULTY_PAIRS } from '../game/engine'
 import { MAX_PLAYERS } from '../game/SetupForm'
 import { Game, type GameResult } from '../game/Game'
 import { useLoadedFaces } from '../game/useLoadedFaces'
-import { loadBoothConfig, type BoothConfig } from './config'
+import { BOOTH_BOARD, BOOTH_ZOOM, loadBoothConfig, type BoothConfig } from './config'
 import { DailyBoard, rankText } from '../scores/DailyBoard'
 import { useDailyBoard } from '../scores/useDailyBoard'
 import { StaffMenu } from './StaffMenu'
@@ -88,7 +88,7 @@ export function Booth() {
   }
 
   return (
-    <div className="booth" onPointerDown={activity} onKeyDown={activity}>
+    <div className="booth" style={{ '--booth-zoom': BOOTH_ZOOM[config.size], '--booth-board': BOOTH_BOARD[config.size] } as React.CSSProperties} onPointerDown={activity} onKeyDown={activity}>
       <button type="button" className="booth__staff-corner" aria-label="Staff menu" tabIndex={-1} onClick={cornerTap} />
 
       {phase === 'attract' && (
