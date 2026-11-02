@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       { path: '/admin/sets/:id', element: <AdminGate><AdminSet /></AdminGate> },
     ],
   },
-])
+], { basename: import.meta.env.BASE_URL.replace(/\/$/, '') || '/' })
 
 export default function App() {
   return <SettingsProvider><RouterProvider router={router} /></SettingsProvider>
