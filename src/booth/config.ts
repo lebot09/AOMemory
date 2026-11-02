@@ -8,10 +8,12 @@ export type BoothConfig = {
   /** Seconds without a touch before "Still playing?" appears. */
   idleSeconds: number
   askName: boolean
+  /** Show an on-screen keyboard for names, so the booth needs no physical keyboard. */
+  touchKeyboard: boolean
 }
 
 export const DEFAULT_BOOTH: BoothConfig = {
-  versionId: DEMO_OPTION.versionId, setName: DEMO_OPTION.name, difficulty: 'medium', idleSeconds: 45, askName: true,
+  versionId: DEMO_OPTION.versionId, setName: DEMO_OPTION.name, difficulty: 'medium', idleSeconds: 45, askName: true, touchKeyboard: true,
 }
 
 const KEY = 'ao-memory:booth-config'

@@ -102,8 +102,9 @@ Open `/booth` on the booth screen (or tap **Booth mode** on the home page), then
 
 - An attract screen with the AO logo and today's best times runs until someone taps.
 - Players can enter a display name (optional) and play. Results show their rank for the day.
+- **On-screen keyboard:** names are typed on a large keyboard shown on screen (with capitals, accents and digits), so the booth needs no physical keyboard. The device's own pop-up keyboard is suppressed. Turn it off in the staff menu if a keyboard is attached.
 - If nobody touches the screen for 45 seconds (configurable), "Still playing?" appears. After 10 more seconds it resets to the attract screen.
-- **Staff menu:** tap the top-left corner 5 times quickly, or press Ctrl+Shift+S. From there you can choose the card set and difficulty, set the idle time, turn name entry on or off, clear today's times, toggle full screen and change display settings.
+- **Staff menu:** tap the top-left corner 5 times quickly, or press Ctrl+Shift+S. From there you can choose the card set and difficulty, set the idle time, turn name entry and the on-screen keyboard on or off, clear today's times, toggle full screen and change display settings.
 - Today's best times are stored only in that screen's browser, and older days are deleted automatically.
 - After one online visit, the game works offline. The built-in "Shapes (demo)" set is always available.
 
