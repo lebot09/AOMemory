@@ -3,6 +3,7 @@ import { AoLogo } from '../components/Brand'
 import { recordGame } from '../lib/cardSets'
 import { DEMO_SET_ID } from '../game/demoSet'
 import { DIFFICULTY_PAIRS, formatTime } from '../game/engine'
+import { MAX_PLAYERS } from '../game/SetupForm'
 import { Game, type GameResult } from '../game/Game'
 import { useLoadedFaces } from '../game/useLoadedFaces'
 import { loadBoothConfig, type BoothConfig } from './config'
@@ -129,15 +130,15 @@ export function Booth() {
       {phase === 'name' && (
         <form className="booth-name" onSubmit={(e) => { e.preventDefault(); begin(names) }}>
           <div className="booth-players" role="radiogroup" aria-label="Number of players">
-            {[1, 2].map((n) => (
+            {Array.from({ length: MAX_PLAYERS }, (_, i) => i + 1).map((n) => (
               <button key={n} type="button" role="radio" aria-checked={names.length === n}
-                className="booth-players__opt" onClick={() => { activity(); setNames((p) => (n === 1 ? [p[0] ?? ''] : [p[0] ?? '', p[1] ?? ''])) }}>
-                {n === 1 ? '1 player' : '2 players'}
+                className="booth-players__opt" onClick={() => { activity(); setNames((p) => Array.from({ length: n }, (_, k) => p[k] ?? '')) }}>
+                {n === 1 ? '1 player' : `${n} players`}
               </button>
             ))}
           </div>
           <h1>{names.length === 1 ? "What's your name?" : "What are your names?"}</h1>
-          <p>{names.length === 1 ? "It's only shown on today's best times on this screen." : 'Take turns. Find a pair and you go again.'}</p>
+          <p>{names.length === 1 ? "It's only shown on today's best times on this screen." : 'Play together on this screen. Take turns, and find a pair to go again.'}</p>
           {names.map((n, i) => (
             <input key={i} aria-label={names.length === 1 ? 'Your name' : `Player ${i + 1} name`} value={n} maxLength={16}
               autoFocus={i === 0} autoComplete="off" className="booth-name__input"
@@ -161,7 +162,7 @@ export function Booth() {
             setName={config.setName}
             seed={seed}
             onExit={reset}
-            onPlayAgain={() => (config.askName ? (setNames(names.length > 1 ? ['', ''] : ['']), setPhase('name')) : begin(['Guest']))}
+            onPlayAgain={() => (names.length > 1 ? begin(names) : config.askName ? (setNames(['']), setPhase('name')) : begin(['Guest']))}
             onFinish={onFinish}
             onActivity={activity}
             resultsExtra={() => (

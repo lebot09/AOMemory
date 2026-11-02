@@ -43,3 +43,11 @@
 .results__players { list-style: none; padding: 0; margin: var(--space-4) 0; display: flex; flex-direction: column; gap: var(--space-2); }
 .results__players li { display: flex; justify-content: space-between; padding: var(--space-2) var(--space-4); border-radius: 8px; background: var(--color-surface); }
 .results__players li:first-child { background: var(--ao-yellow); color: var(--ao-blue); }
+
+/* Shared-screen turn marker: readable from a few metres away, pops in on each new turn. */
+.turn-banner {
+  margin: 0; text-align: center; font-size: clamp(20px, 3.2vh, 48px); font-weight: 700; color: var(--color-heading);
+  animation: turn-pop var(--motion-flip) var(--ease-out);
+}
+.turn-banner__name { background: var(--ao-yellow); color: var(--ao-blue); padding: 0 0.35em; border-radius: 0.2em; }
+@keyframes turn-pop { from { transform: scale(0.9); opacity: 0; } to { transform: none; opacity: 1; } }

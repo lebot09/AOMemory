@@ -9,7 +9,7 @@ A memory card game for web, phones, tablets and conference booth touch screens. 
 | 1 | Foundations: app shell, AO theme, accessibility settings, database and versioning | done |
 | 2 | Single-player game, touch and keyboard play, booth mode | done |
 | 3 | Admin interface for card sets | done |
-| 4 | Multiplayer: same-screen and online rooms | done |
+| 4 | Multiplayer: 2 to 4 players taking turns on one big screen | done |
 
 ## Run it
 
@@ -77,12 +77,13 @@ In Supabase, go to **Authentication › URL Configuration** and set **Site URL**
 
 ## Multiplayer
 
-- **Same screen:** on **Play**, pick 2 to 4 players and type their names. Players take turns; finding a pair earns another turn. Booth mode offers 1 or 2 players. Today's best times only count solo games.
-- **Online:** on **Online**, one person hosts by picking an approved card set and difficulty, and gets a 5-letter game code and an invite link. Up to 4 players join from their own devices, then the host starts the game.
-  - The server deals the cards and checks every flip (`flip_tile`), so nobody can peek or play out of turn. Face-down cards are never sent to the browser.
-  - Players are anonymous: a display name and a random token kept on their device (a refresh keeps their seat). Rooms and names are deleted after a day.
-  - Live updates use Supabase Realtime on the `rooms` table, with polling every 4 seconds as a fallback.
-  - The built-in demo set can't be used online, because the server needs a real card set.
+Multiplayer is played together on one screen (a booth display, TV or tablet), not online.
+
+- On **Play**, or in booth mode after tapping the attract screen, pick 2 to 4 players and type their names.
+- Players take turns flipping two cards. Finding a pair earns that player another turn; a miss passes the turn on.
+- The scoreboard and a large "Your turn, *Name*" banner show whose turn it is, readable from a few metres away. Screen readers hear who plays next after each move.
+- At the end, players are ranked by pairs found. **Play again** starts a rematch with the same names.
+- Names stay on the device and are never sent anywhere. Today's best times only count solo games.
 
 ## Branding
 

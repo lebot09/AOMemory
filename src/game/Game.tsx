@@ -67,6 +67,12 @@ export function Game(props: Props) {
         <button type="button" className="btn btn--secondary btn--small hud__exit" onClick={props.onExit}>Quit</button>
       </section>
       {multi && <Scoreboard players={state.players} current={state.current} finished={finished} />}
+      {multi && !finished && (
+        // Big, glanceable turn marker for a shared screen. Screen readers get the turn from the announcer.
+        <p className="turn-banner" key={state.current} aria-hidden="true">
+          Your turn, <span className="turn-banner__name">{state.players[state.current].name}</span>
+        </p>
+      )}
 
       <p className="visually-hidden" aria-live="assertive">{announce(state)}</p>
 

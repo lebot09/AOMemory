@@ -9,8 +9,8 @@ export type SetOption = { versionId: string; name: string; cardCount: number; ve
 export const DEMO_OPTION: SetOption = { versionId: DEMO_SET_ID, name: DEMO_SET_NAME, cardCount: DEMO_FACES.length }
 
 /** Approved sets from the server, plus the built-in demo (always available, even offline). */
-export function useSetOptions(includeDemo = true) {
-  const [options, setOptions] = useState<SetOption[]>(includeDemo ? [DEMO_OPTION] : [])
+export function useSetOptions() {
+  const [options, setOptions] = useState<SetOption[]>([DEMO_OPTION])
   const [status, setStatus] = useState<'loading' | 'ready' | 'offline'>('loading')
   useEffect(() => {
     let alive = true
@@ -20,12 +20,12 @@ export function useSetOptions(includeDemo = true) {
         const remote = sets
           .filter((s) => s.version_id && (s.card_count ?? 0) >= 2)
           .map((s) => ({ versionId: s.version_id!, name: s.name ?? 'Untitled', cardCount: s.card_count ?? 0, version: s.version ?? undefined }))
-        setOptions(includeDemo ? [...remote, DEMO_OPTION] : remote)
+        setOptions([...remote, DEMO_OPTION])
         setStatus('ready')
       })
       .catch(() => { if (alive) setStatus('offline') })
     return () => { alive = false }
-  }, [includeDemo])
+  }, [])
   return { options, status }
 }
 
@@ -36,12 +36,10 @@ const defaultName = (i: number) => `Player ${i + 1}`
 
 type Props = {
   initial?: Partial<Setup>; onStart: (s: Setup) => void; askName?: boolean; submitLabel?: string
-  /** Online games are dealt by the server, so only approved sets can be used. */
-  includeDemo?: boolean; disabled?: boolean
 }
 
-export function SetupForm({ initial, onStart, askName = true, submitLabel = 'Start game', includeDemo = true, disabled }: Props) {
-  const { options, status } = useSetOptions(includeDemo)
+export function SetupForm({ initial, onStart, askName = true, submitLabel = 'Start game' }: Props) {
+  const { options, status } = useSetOptions()
   const [versionId, setVersionId] = useState(initial?.versionId ?? '')
   const [difficulty, setDifficulty] = useState<Difficulty>(initial?.difficulty ?? 'easy')
   const [names, setNames] = useState<string[]>(initial?.playerNames ?? [defaultName(0)])
@@ -61,7 +59,7 @@ export function SetupForm({ initial, onStart, askName = true, submitLabel = 'Sta
       <fieldset className="setup__group">
         <legend>Card set</legend>
         {status === 'loading' && <p className="setup__note">Checking for card sets…</p>}
-        {status === 'offline' && <p className="setup__note">{includeDemo ? 'Offline: only the built-in demo set is available.' : "Couldn't reach the game server. Check the internet connection."}</p>}
+        {status === 'offline' && <p className="setup__note">Offline: only the built-in demo set is available.</p>}
         {status === 'ready' && options.length === 0 && <p className="setup__note">No card sets have been approved yet. An admin can add one in the admin area.</p>}
         <div className="setup__sets">
           {options.map((o) => (
@@ -104,7 +102,7 @@ export function SetupForm({ initial, onStart, askName = true, submitLabel = 'Sta
                 </label>
               ))}
             </div>
-            {names.length > 1 && <small className="setup__note">Players take turns. Find a pair and you go again.</small>}
+            {names.length > 1 && <small className="setup__note">Everyone plays on this screen and takes turns. Find a pair and you go again.</small>}
           </fieldset>
           <fieldset className="setup__group">
             <legend>{names.length === 1 ? 'Player name' : 'Player names'}</legend>
@@ -121,7 +119,7 @@ export function SetupForm({ initial, onStart, askName = true, submitLabel = 'Sta
         </>
       )}
 
-      <button type="submit" className="btn" disabled={disabled || !selected}>{submitLabel}</button>
+      <button type="submit" className="btn" disabled={!selected}>{submitLabel}</button>
     </form>
   )
 }

@@ -55,12 +55,6 @@ export type Database = {
       create_draft_version: { Args: { p_set_id: string }; Returns: string }
       is_admin: { Args: never; Returns: boolean }
       retire_set: { Args: { p_set_id: string }; Returns: undefined }
-      create_room: { Args: { p_version_id: string; p_pairs: number; p_name: string }; Returns: Json }
-      join_room: { Args: { p_code: string; p_name: string }; Returns: Json }
-      start_room: { Args: { p_code: string; p_token: string }; Returns: undefined }
-      flip_tile: { Args: { p_code: string; p_token: string; p_idx: number }; Returns: undefined }
-      hide_miss: { Args: { p_code: string }; Returns: undefined }
-      get_room: { Args: { p_code: string }; Returns: Json }
     }
     Enums: { game_mode: GameMode; version_status: VersionStatus }
     CompositeTypes: { [_ in never]: never }

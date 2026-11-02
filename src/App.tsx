@@ -8,8 +8,6 @@ import { AdminSet } from './admin/AdminSet'
 import { SettingsPage } from './pages/SettingsPage'
 import { SettingsProvider } from './settings/SettingsContext'
 import { Booth } from './booth/Booth'
-import { OnlineStart } from './online/OnlineStart'
-import { OnlineRoom } from './online/OnlineRoom'
 
 const router = createBrowserRouter([
   { path: '/booth', element: <Booth /> },
@@ -18,8 +16,6 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Home /> },
       { path: '/play', element: <Play /> },
-      { path: '/online', element: <OnlineStart /> },
-      { path: '/online/:code', element: <OnlineRoom /> },
       { path: '/settings', element: <SettingsPage /> },
       { path: '/admin', element: <AdminGate><AdminHome /></AdminGate> },
       { path: '/admin/sets/:id', element: <AdminGate><AdminSet /></AdminGate> },
