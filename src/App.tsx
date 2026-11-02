@@ -2,7 +2,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { Home } from './pages/Home'
 import { Play } from './pages/Play'
-import { Admin } from './pages/Admin'
+import { AdminGate } from './admin/AdminGate'
+import { AdminHome } from './admin/AdminHome'
+import { AdminSet } from './admin/AdminSet'
 import { SettingsPage } from './pages/SettingsPage'
 import { SettingsProvider } from './settings/SettingsContext'
 import { Booth } from './booth/Booth'
@@ -15,7 +17,8 @@ const router = createBrowserRouter([
       { path: '/', element: <Home /> },
       { path: '/play', element: <Play /> },
       { path: '/settings', element: <SettingsPage /> },
-      { path: '/admin', element: <Admin /> },
+      { path: '/admin', element: <AdminGate><AdminHome /></AdminGate> },
+      { path: '/admin/sets/:id', element: <AdminGate><AdminSet /></AdminGate> },
     ],
   },
 ])

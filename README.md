@@ -8,8 +8,8 @@ A memory card game for web, phones, tablets and conference booth touch screens. 
 | --- | --- | --- |
 | 1 | Foundations: app shell, AO theme, accessibility settings, database and versioning | done |
 | 2 | Single-player game, touch and keyboard play, booth mode | done |
-| 3 | Admin interface for card sets | next |
-| 4 | Multiplayer: same-screen and online rooms | planned |
+| 3 | Admin interface for card sets | done |
+| 4 | Multiplayer: same-screen and online rooms | next |
 
 ## Run it
 
@@ -32,14 +32,27 @@ The database lives in the `aomemory_db` Supabase project; the schema is in `supa
 - Players (signed in or not) can never see drafts. Only admins can write.
 - Card images live in the public `card-images` storage bucket and are never overwritten. A changed image is uploaded under a new name, so older versions keep their pictures.
 
+### Admin area
+
+Go to **Admin** (`/admin`) and sign in with email and password.
+
+1. **Create a card set**: give it a name. Version 1 starts as a draft.
+2. **Add cards**: drop images or choose files. Each image becomes one card and is resized to 1024 px WebP. Then edit each card's name, alt text (a short description of the picture for screen reader users) and optional tags. Changes save when you leave a field.
+3. **Approve and go live**: you need at least 2 cards with different names and alt text. The version is then frozen and new games use it.
+4. **Update later**: **Start version N+1** copies the live cards into a new draft. Players keep the live version until you approve the new one, and games in progress are never affected. **Discard draft** throws a draft away. **Retire set** hides the set from players.
+
 ### Adding an admin
 
-Admins sign in with Supabase Auth (admin UI arrives in step 3). To make someone an admin, run this in the Supabase SQL editor after they have signed in once:
+Anyone can create an account, but only admins can manage card sets. After the person has created an account (and confirmed their email), run this in the Supabase SQL editor:
 
 ```sql
 insert into public.admins (user_id)
 select id from auth.users where email = 'person@example.org';
 ```
+
+## Hosting
+
+It's a static site: `npm run build` produces `dist/`. `vercel.json` (Vercel) and `public/_redirects` (Netlify) send every page to the app. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` from `.env.example` in the host's environment settings.
 
 ## Branding
 
