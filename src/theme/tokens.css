@@ -1,0 +1,101 @@
+/*
+ * AO brand tokens, from the AO Digital Style Guide v2.0 (March 2021), pages 8-12 and 35-38.
+ * Font: the guide specifies Suisse Int'l (licensed). Until AO's web font files are added
+ * to src/theme/fonts/, Inter is used as the closest free match.
+ */
+:root {
+  /* Primary */
+  --ao-blue: #042d98;          /* leading color: logo, headings, backgrounds */
+  --ao-yellow: #fff500;        /* activation color: highlights, alerts */
+  /* Interactive */
+  --ao-active-blue: #3b7ff6;   /* calls to action, buttons, links */
+  --ao-light-blue: #edf0f6;    /* interactive area backgrounds, hover */
+  --ao-light-yellow: #fffdc6;  /* action and link backgrounds */
+  /* Secondary */
+  --ao-dark-gray: #333333;     /* body text (guide lists RGB 51/51/51) */
+  --ao-light-gray: #f7f7f7;    /* inactive tiles, light backgrounds */
+  --ao-dark-blue: #001b62;     /* footers, overlays, highlighted areas */
+  --ao-white: #ffffff;
+  /* Tertiary (signals only, small areas) */
+  --ao-error: #d0021b;
+  --ao-correct: #6eb43c;
+
+  /* Semantic roles used by the app */
+  --color-bg: var(--ao-white);
+  --color-surface: var(--ao-light-gray);
+  --color-surface-interactive: var(--ao-light-blue);
+  --color-text: var(--ao-dark-gray);
+  --color-heading: var(--ao-blue);
+  --color-action: var(--ao-active-blue);
+  --color-action-hover: color-mix(in srgb, var(--ao-active-blue) 80%, white);
+  --color-on-action: var(--ao-white);
+  --color-focus: var(--ao-blue);
+  --color-highlight: var(--ao-yellow);
+  --color-card-back: var(--ao-dark-blue);
+  --color-match: var(--ao-correct);
+  --color-miss: var(--ao-error);
+
+  --font-sans: 'Suisse Intl', 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --weight-regular: 400;
+  --weight-semibold: 600;
+
+  /* Type scale (guide: mobile / desktop). --text-scale is set by the text size setting. */
+  --text-scale: 1;
+  --fs-small: calc(12px * var(--text-scale));
+  --fs-body: calc(16px * var(--text-scale));
+  --fs-h4: calc(16px * var(--text-scale));
+  --fs-h3: calc(18px * var(--text-scale));
+  --fs-h2: calc(24px * var(--text-scale));
+  --fs-h1: calc(24px * var(--text-scale));
+
+  /* Buttons: fully rounded, large 48px / small 36px. Touch targets never below 48px. */
+  --btn-large: 48px;
+  --btn-small: 36px;
+  --touch-min: 48px;
+  --radius-pill: 999px;
+  --radius-card: 12px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --motion-fast: 150ms;
+  --motion-flip: 400ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (min-width: 900px) {
+  :root {
+    --fs-h3: calc(24px * var(--text-scale));
+    --fs-h2: calc(34px * var(--text-scale));
+    --fs-h1: calc(42px * var(--text-scale));
+  }
+}
+
+/* Booth screens: everything scales with the display. */
+@media (min-width: 1800px) {
+  :root { --text-scale: 1.5; --touch-min: 72px; --btn-large: 72px; }
+}
+
+/* High contrast: no active blue (fails WCAG AA with white text), heavier borders. */
+:root[data-contrast='high'] {
+  --color-text: #000000;
+  --color-heading: var(--ao-blue);
+  --color-action: var(--ao-blue);
+  --color-action-hover: var(--ao-dark-blue);
+  --color-surface: var(--ao-white);
+  --color-focus: #000000;
+  --color-match: #2d6a00;
+  --color-miss: #a00014;
+}
+
+:root[data-motion='reduced'] {
+  --motion-fast: 0ms;
+  --motion-flip: 0ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='full']) { --motion-fast: 0ms; --motion-flip: 0ms; }
+}
