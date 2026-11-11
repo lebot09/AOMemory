@@ -1,5 +1,5 @@
 # Publishes a test copy of the game to GitHub Pages on every push to main:
-# https://lebot09.github.io/AOMemory/
+# https://steinlaus-ao.github.io/AOMemory/
 # One-time setup: repo Settings > Pages > Source: "GitHub Actions".
 name: GitHub Pages
 

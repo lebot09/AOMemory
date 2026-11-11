@@ -60,7 +60,7 @@ It's a static site: `npm run build` produces `dist/`, and the Supabase settings 
 
 **Option A: automatic (recommended).** Every push to `main` runs the **Build for Hostinger** GitHub Action. It runs the tests, builds the site and puts the ready-to-serve files on the `hostinger` branch. To set it up in hPanel:
 1. Go to **Websites › your site › Advanced › Git**.
-2. Add the repository `https://github.com/lebot09/AOMemory.git` with branch **hostinger** and an empty install path (that means `public_html`). For a private repo, add the SSH key that hPanel shows as a deploy key in GitHub (**Settings › Deploy keys**).
+2. Add the repository `https://github.com/steinlaus-ao/AOMemory.git` with branch **hostinger** and an empty install path (that means `public_html`). For a private repo, add the SSH key that hPanel shows as a deploy key in GitHub (**Settings › Deploy keys**).
 3. Click **Deploy**. To update automatically, copy the webhook URL hPanel shows into GitHub (**Settings › Webhooks**).
 
 **Option B: manual upload.** Run `npm run build` locally, then upload the *contents* of `dist/` (including the hidden `.htaccess`) into `public_html` with hPanel's File Manager or FTP.
@@ -69,7 +69,7 @@ Turn on the free SSL certificate in hPanel. HTTPS is required for the installabl
 
 ### GitHub Pages (test copy)
 
-Every push to `main` also publishes a test copy to **https://lebot09.github.io/AOMemory/** (`.github/workflows/pages.yml`). One-time setup: go to **Settings › Pages** and set Source to **GitHub Actions**. Pages on a private repository needs a paid GitHub plan (Pro, Team or Enterprise); on a free plan, the repository has to be public.
+Every push to `main` also publishes a test copy to **https://steinlaus-ao.github.io/AOMemory/** (`.github/workflows/pages.yml`). One-time setup: go to **Settings › Pages** and set Source to **GitHub Actions**. Pages on a private repository needs a paid GitHub plan (Pro, Team or Enterprise); on a free plan, the repository has to be public.
 
 ### Vercel / Netlify
 
