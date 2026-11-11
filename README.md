@@ -82,10 +82,11 @@ In Supabase, go to **Authentication › URL Configuration** and set **Site URL**
 ## Today's best (single player)
 
 - Every single-player game (on **Play** or in booth mode) adds its time to **Today's best**. There is one board per number of cards (12, 20 or 30), ranked by time, then moves.
-- The boards are shared by every screen through the `daily_scores` table and start fresh each day (the player's local date). Only the display name the player typed is stored, and times older than 3 days are deleted automatically.
+- The boards are shared by every screen through the `daily_scores` table and start fresh each day (the player's local date). Only the display name the player typed is stored, and entries older than 3 days are deleted automatically by an hourly database job (`purge_old_daily_scores`, scheduled with pg_cron).
 - Scores go in only through `submit_daily_score`, which checks the date and that the time and moves are possible. Nobody can edit or delete them from the browser.
 - Admins can wipe one board or all of them to zero under **Admin › Today's best** (`/admin/scores`), using `reset_daily_scores`.
 - Offline, a screen keeps its own board in the browser until the connection is back.
+- **Admin › Data & privacy** (`/admin/privacy`) explains for legal what player data is stored, where and for how long, and has a **Delete all player data** button.
 
 ## Multiplayer
 

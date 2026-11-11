@@ -6,6 +6,7 @@ import { AdminGate } from './admin/AdminGate'
 import { AdminHome } from './admin/AdminHome'
 import { AdminSet } from './admin/AdminSet'
 import { AdminScores } from './admin/AdminScores'
+import { AdminPrivacy } from './admin/AdminPrivacy'
 import { SettingsPage } from './pages/SettingsPage'
 import { SettingsProvider } from './settings/SettingsContext'
 import { Booth } from './booth/Booth'
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: '/settings', element: <SettingsPage /> },
       { path: '/admin', element: <AdminGate><AdminHome /></AdminGate> },
       { path: '/admin/scores', element: <AdminGate><AdminScores /></AdminGate> },
+      { path: '/admin/privacy', element: <AdminGate><AdminPrivacy /></AdminGate> },
       { path: '/admin/sets/:id', element: <AdminGate><AdminSet /></AdminGate> },
     ],
   },
