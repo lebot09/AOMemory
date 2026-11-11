@@ -52,3 +52,7 @@
 .admin-scores__board { align-items: stretch; }
 .admin-scores__board .btn { align-self: flex-start; margin-top: var(--space-2); }
 .admin-nav { display: flex; gap: var(--space-4); margin-right: auto; }
+.admin-privacy { display: flex; flex-direction: column; gap: var(--space-6); max-width: 760px; }
+.admin-privacy section > h2 { font-size: var(--fs-h3); margin-bottom: var(--space-2); }
+.admin-privacy ul { padding-left: 1.25em; display: flex; flex-direction: column; gap: var(--space-2); }
+.admin-privacy p + ul, .admin-privacy ul + p { margin-top: var(--space-2); }
